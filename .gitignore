@@ -1,6 +1,15 @@
 # Prerequisites
 *.d
 
+# Build 폴더 전체(임시/중간 산출물)
+build/
+build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+
 # Compiled Object files
 *.slo
 *.lo
@@ -30,3 +39,14 @@
 *.exe
 *.out
 *.app
+
+# Qt Creator/Qt Project temp files
+*.pro.user
+*.qmake.stash
+*.autosave
+
+# 기타 임시 및 로그 파일
+*.log
+*.tmp
+*.swp
+*~
