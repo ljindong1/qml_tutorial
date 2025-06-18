@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
+pragma ComponentBehavior: Bound
+
 ApplicationWindow {
     id: appWin
     visible: true
@@ -41,6 +43,7 @@ ApplicationWindow {
 
         // 버튼 그리드
         Rectangle {
+            id: calcArea
             width: parent.width
             height: parent.height * 0.7
             color: "#f5f5f5"
@@ -70,7 +73,7 @@ ApplicationWindow {
 
                 function calculate() {
                     try {
-                        result = eval(expression)
+                        appWin.result = eval(expression)
                     } catch (e) {
                         appWin.result = "Error"
                     }
