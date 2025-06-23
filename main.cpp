@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QFile>
@@ -19,6 +21,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     QString qmlPath = loadTargetQml();
+    std::cout << "QML 경로: " << qmlPath.toStdString() << std::endl;
     engine.load(QUrl::fromLocalFile(qmlPath));
     if (engine.rootObjects().isEmpty())
         return -1;
