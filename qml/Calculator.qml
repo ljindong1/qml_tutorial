@@ -87,7 +87,8 @@ ApplicationWindow {
                         "0", "C", "=", "+"
                     ]
 
-                    Button {
+                    delegate: Button {
+                        required property string modelData
                         text: modelData
                         onClicked: {
                             if (text === "C") {

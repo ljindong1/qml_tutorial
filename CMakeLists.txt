@@ -16,24 +16,44 @@ set(CMAKE_AUTORCC ON)
 # 실행 파일 (타겟 이름을 PROJECT_NAME 변수로 사용)
 qt_add_executable(${PROJECT_NAME}
     main.cpp
-    # qml.qrc   # 필요시 주석 해제하여 사용
+    # resource/qml.qrc   # CMAKE_AUTORCC 사용시 반드시 포함되어야 함
 )
 
-# QML 모듈 설정
+# QML 모듈 설정(.qrc 파일은 옛날 방식으로 비선호)
 qt_add_qml_module(${PROJECT_NAME}
     URI CalculatorApp
     VERSION 1.0
     QML_FILES qml/Calculator.qml
 )
 
-# 라이브러리 링크 (타겟 이름을 PROJECT_NAME 변수로 사용)
+# 라이브러리 링크 (키워드 방식 적용)
 target_link_libraries(${PROJECT_NAME}
-    Qt6::Core
-    Qt6::Gui
-    Qt6::Qml
-    Qt6::Quick
+    PRIVATE
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Qml
+        Qt6::Quick
 )
 
+# config/test_config.json 복사
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/config"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/config/test_config.json"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/config/test_config.json"
+)
+
+# qml 폴더 전체 복사
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/qml"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/qml"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/qml"
+)
 
 
 
